@@ -304,4 +304,4 @@ class MeroShare:
             "companyShareId": ipoId,
             "bankId": self.bankId
         }
-        return self.sendAuthorizedRequest("https://webbackend.cdsc.com.np/api/meroShare/applicantForm/share/apply/", "post", data, False)
+        return self.sendAuthorizedRequest("https://webbackend.cdsc.com.np/api/meroShare/applicantForm/share/apply/", "post", data)
