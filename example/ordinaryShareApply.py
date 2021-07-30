@@ -1,39 +1,32 @@
-from MeroShareAPI import MeroShare 
-from env import password, details
+from MeroShareAPI import MeroShare
+from env import *
 
 def searchBank(code):
     for i in MeroShare.getBankInfo():
         if i['code'] == str(code):
             return i['id']
 
-def checkForIPOResult(boid):
-    for i in MeroShare.getCompany()['body']:
-        result = MeroShare.checkIPOResult(i['id'], boid)
-        if(result['success']):
-            print(result['message'], " for ", i['name'])
 
-bankId = searchBank(password['bankCode'])
+def apply(id, bankCode, crn, pinCode, password, kitta):
+    bankId = searchBank(bankCode)
+    meroShare = MeroShare(id, password, bankId)
+    boid = meroShare.getOwnDetails()['demat']
+    applyForIPO = meroShare.getOpenedIPO()['object']
 
-meroShare = MeroShare(password['id'], password['pass'], bankId)
+    for i in applyForIPO:
+        if(i['shareGroupName'] == 'Ordinary Shares'):
+            print(i['companyName'])
+            shareId = i['companyShareId']
+            applied = meroShare.applyIPO(shareId, pinCode, crn, kitta)
+            print(applied)
 
-boid = meroShare.getOwnDetails()['demat']
+            if('errorCode' not in applied.keys()):
+                print(applied['message'])
+            else:
+                print('Error while applying')
 
-applyForIPO = meroShare.getOpenedIPO()['object']
-
-for i in applyForIPO:
-    if(i['shareGroupName'] == 'Ordinary Shares'):
-        shareId = i['companyShareId']
-        applied = meroShare.applyIPO(shareId, details['pinCode'], details['crn'], details['kitta'])
-        
-        if('errorCode' not in applied.keys()):
-            print(f"Done applying {i['companyName']}")
-        else:
-            print('Error while applying')
-
-    else:
-        print('Nothing to apply')
-
-
-
+for i in all:
+    apply(i['id'], i['bankCode'], i['crn'], i['pinCode'], i['password'], kitta)
+    print()
 
 
