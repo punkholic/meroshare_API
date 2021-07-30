@@ -13,7 +13,6 @@ class MeroShare:
         self.checkRequired()
 
     def checkRequired(self):
-        toCheck = ['branchName', 'accountNumber', 'bankCode', 'accountType', 'accountBranch', 'customerId', 'boid', 'branchCode', 'branchId', 'applyBoid', 'bankId', 'clientCode', 'branchName', 'bankName']
         for i in self.toCheck:
             if not getattr(self, i):
                 ownDetail = self.getOwnDetails()
