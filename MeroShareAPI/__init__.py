@@ -280,7 +280,7 @@ class MeroShare:
     def canApply(self, ipoId):
         return self.sendAuthorizedRequest(f"https://webbackend.cdsc.com.np/api/meroShare/applicantForm/customerType/{ipoId}/{self.boid}")
         
-    def applyIPO(self, ipoId, pin, crnNumber, kitta):
+    def applyIPO(self, ipoId, pin, kitta):
 
         if 'Customer can apply.' != self.canApply(ipoId)['message']:
             print("Cannot apply this share")
@@ -299,7 +299,7 @@ class MeroShare:
             "customerId": self.customerId,
             "accountBranchId": self.branchId,
             "appliedKitta": kitta,
-            "crnNumber": crnNumber,
+            "crnNumber": getBankRequestDetails['crnNumber'],
             "transactionPIN": pin,
             "companyShareId": ipoId,
             "bankId": self.bankId
