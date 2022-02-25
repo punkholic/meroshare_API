@@ -7,7 +7,7 @@ class MeroShare:
         self.username = username
         self.password = password
         self.token = self.getAuthToken(bankID)
-        self.toCheck = ['branchName', 'accountNumber', 'bankCode', 'accountType', 'accountBranch', 'customerId', 'boid', 'branchCode', 'branchId', 'applyBoid', 'bankId', 'clientCode', 'branchName', 'bankName']
+        self.toCheck = ['branchName', 'accountNumber', 'bankCode', 'accountType', 'accountBranch', 'customerId', 'boid', 'branchCode', 'branchId', 'applyBoid', 'bankId', 'clientCode', 'branchName', 'bankName', 'crnNumber']
         for i in self.toCheck:
             setattr(self, i, None)
         self.checkRequired()
@@ -35,6 +35,7 @@ class MeroShare:
                 self.clientCode = bankDetails['capital']['code']
                 self.branchName = bankDetails['branch']['name']
                 self.bankName = bankDetails['bank']['name']
+                self.crnNumber = bankDetails['crnNumber']
                 break
     
 
@@ -299,7 +300,7 @@ class MeroShare:
             "customerId": self.customerId,
             "accountBranchId": self.branchId,
             "appliedKitta": kitta,
-            "crnNumber": getBankRequestDetails['crnNumber'],
+            "crnNumber": self.crnNumber,
             "transactionPIN": pin,
             "companyShareId": ipoId,
             "bankId": self.bankId
