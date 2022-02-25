@@ -7,7 +7,7 @@ def searchBank(code):
             return i['id']
 
 
-def apply(id, bankCode, crn, pinCode, password, kitta):
+def apply(id, bankCode, pinCode, password, kitta):
     bankId = searchBank(bankCode)
     meroShare = MeroShare(id, password, bankId)
     boid = meroShare.getOwnDetails()['demat']
@@ -17,7 +17,7 @@ def apply(id, bankCode, crn, pinCode, password, kitta):
         if(i['shareGroupName'] == 'Ordinary Shares'):
             print(i['companyName'])
             shareId = i['companyShareId']
-            applied = meroShare.applyIPO(shareId, pinCode, crn, kitta)
+            applied = meroShare.applyIPO(shareId, pinCode, kitta)
             print(applied)
 
             if('errorCode' not in applied.keys()):
@@ -26,7 +26,7 @@ def apply(id, bankCode, crn, pinCode, password, kitta):
                 print('Error while applying')
 
 for i in all:
-    apply(i['id'], i['bankCode'], i['crn'], i['pinCode'], i['password'], kitta)
+    apply(i['id'], i['bankCode'], i['pinCode'], i['password'], kitta)
     print()
 
 
